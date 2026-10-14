@@ -1,0 +1,417 @@
+<title>Hari Istimewamu</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,600;1,400;1,500&family=Pinyon+Script&family=Jost:wght@300;400;500&display=swap">
+<style>
+/* Layout: satu kolom sempit seperti surat, langit malam dengan hati yang melayang, kue ulang tahun interaktif di tengah */
+:root {
+  --night: #1a0f1f;
+  --night-2: #2a1530;
+  --petal: #f3c9d0;
+  --rose: #e58aa0;
+  --gold: #f0c987;
+  --ink: #f7ece8;
+  --ink-soft: #cdb7bf;
+  --line: rgba(243, 201, 208, 0.22);
+  --font-display: "Cormorant Garamond", "Georgia", serif;
+  --font-script: "Pinyon Script", "Brush Script MT", cursive;
+  --font-body: "Jost", "Helvetica Neue", Arial, sans-serif;
+  color-scheme: dark;
+}
+* { box-sizing: border-box; }
+html { background: var(--night); }
+body {
+  margin: 0;
+  padding-inline: 20px;
+  padding-block: 0 56px;
+  background:
+    radial-gradient(900px 500px at 50% -80px, rgba(229, 138, 160, 0.28), transparent 70%),
+    radial-gradient(700px 600px at 100% 40%, rgba(240, 201, 135, 0.08), transparent 70%),
+    linear-gradient(180deg, var(--night-2) 0%, var(--night) 55%);
+  background-color: var(--night);
+  color: var(--ink);
+  font-family: var(--font-body);
+  font-weight: 300;
+  font-size: 17px;
+  line-height: 1.75;
+  overflow-x: hidden;
+}
+#sky { position: fixed; inset: 0; width: 100%; height: 100%; pointer-events: none; z-index: 0; }
+main { position: relative; z-index: 1; max-width: 640px; margin-inline: auto; }
+section { padding-block: 44px; }
+h1, h2, h3, p { margin: 0; }
+h2 {
+  font-family: var(--font-display);
+  font-style: italic;
+  font-weight: 500;
+  font-size: clamp(1.9rem, 6vw, 2.5rem);
+  line-height: 1.2;
+  text-wrap: balance;
+  color: var(--petal);
+}
+.label {
+  font-family: var(--font-body);
+  font-weight: 400;
+  font-size: 0.72rem;
+  letter-spacing: 0.28em;
+  text-transform: uppercase;
+  color: var(--gold);
+}
+
+/* Hero */
+.hero { text-align: center; padding-block: 72px 24px; display: flex; flex-direction: column; align-items: center; gap: 14px; }
+.hero h1 {
+  font-family: var(--font-display);
+  font-weight: 400;
+  font-style: italic;
+  font-size: clamp(2.1rem, 8vw, 3.2rem);
+  line-height: 1.1;
+  text-wrap: balance;
+}
+.hero .nama {
+  font-family: var(--font-script);
+  font-size: clamp(4rem, 19vw, 7rem);
+  line-height: 1.05;
+  color: var(--petal);
+  text-shadow: 0 0 40px rgba(229, 138, 160, 0.55);
+  overflow-wrap: anywhere;
+  padding-inline: 4px;
+}
+.hero .sub { max-width: 30ch; color: var(--ink-soft); text-wrap: balance; }
+.ornament { width: 120px; height: 14px; color: var(--gold); margin-top: 6px; }
+
+/* Kue */
+.cake-wrap { display: flex; flex-direction: column; align-items: center; gap: 18px; text-align: center; }
+.cake { width: min(300px, 78vw); height: auto; cursor: pointer; overflow: visible; }
+.cake:focus-visible { outline: 2px solid var(--gold); outline-offset: 6px; border-radius: 12px; }
+.flame { transform-origin: center bottom; transform-box: fill-box; animation: flicker 1.3s ease-in-out infinite alternate; transition: opacity 0.5s, transform 0.5s; }
+.flame:nth-of-type(2) { animation-delay: -0.4s; }
+.flame:nth-of-type(3) { animation-delay: -0.8s; }
+@keyframes flicker { from { transform: scale(1, 1) rotate(-3deg); } to { transform: scale(0.88, 1.1) rotate(3deg); } }
+.out .flame { opacity: 0; transform: scale(0.2); animation: none; }
+.smoke { opacity: 0; }
+.out .smoke { animation: smoke 2.4s ease-out forwards; }
+@keyframes smoke { 0% { opacity: 0.7; transform: translateY(0); } 100% { opacity: 0; transform: translateY(-26px); } }
+.btn {
+  font-family: var(--font-body);
+  font-size: 0.82rem;
+  font-weight: 500;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: var(--night);
+  background: linear-gradient(135deg, var(--petal), var(--rose));
+  border: 0;
+  border-radius: 999px;
+  padding: 13px 28px;
+  cursor: pointer;
+  box-shadow: 0 8px 30px rgba(229, 138, 160, 0.35);
+  transition: transform 0.2s, box-shadow 0.2s;
+}
+.btn:hover { transform: translateY(-2px); box-shadow: 0 12px 34px rgba(229, 138, 160, 0.5); }
+.btn:focus-visible { outline: 2px solid var(--gold); outline-offset: 3px; }
+.wish-line { min-height: 3.4em; font-family: var(--font-display); font-style: italic; font-size: 1.3rem; line-height: 1.45; color: var(--petal); max-width: 28ch; text-wrap: balance; }
+
+/* Surat */
+.letter {
+  border-top: 1px solid var(--line);
+  border-bottom: 1px solid var(--line);
+  padding-block: 40px;
+  display: flex;
+  flex-direction: column;
+  gap: 22px;
+}
+.letter .salam { font-family: var(--font-script); font-size: 2.4rem; line-height: 1.2; color: var(--gold); overflow-wrap: anywhere; }
+.letter p { font-family: var(--font-display); font-size: 1.28rem; line-height: 1.7; font-weight: 400; color: var(--ink); text-wrap: pretty; }
+.letter .ttd { font-family: var(--font-script); font-size: 2.1rem; color: var(--petal); text-align: right; line-height: 1.3; overflow-wrap: anywhere; }
+
+/* Alasan */
+.reasons { display: flex; flex-direction: column; gap: 0; margin-top: 22px; }
+.reason { display: grid; grid-template-columns: 22px minmax(0, 1fr); column-gap: 16px; padding-block: 22px; border-top: 1px solid var(--line); }
+.reason:last-child { border-bottom: 1px solid var(--line); }
+.reason svg { width: 20px; height: 20px; margin-top: 5px; color: var(--rose); }
+.reason h3 { font-family: var(--font-display); font-weight: 600; font-size: 1.3rem; line-height: 1.3; color: var(--petal); }
+.reason p { color: var(--ink-soft); font-size: 0.98rem; line-height: 1.7; margin-top: 4px; }
+
+/* Doa */
+.wishes { display: grid; grid-template-columns: repeat(auto-fit, minmax(min(100%, 180px), 1fr)); gap: 14px; margin-top: 22px; }
+.wish {
+  padding: 22px 20px;
+  border: 1px solid var(--line);
+  border-radius: 6px;
+  background: linear-gradient(160deg, rgba(243, 201, 208, 0.08), rgba(243, 201, 208, 0.02));
+  min-width: 0;
+}
+.wish h3 { font-family: var(--font-script); font-size: 2rem; line-height: 1.2; color: var(--gold); font-weight: 400; }
+.wish p { margin-top: 6px; font-size: 0.95rem; line-height: 1.65; color: var(--ink-soft); }
+
+/* Penutup */
+.closing { text-align: center; display: flex; flex-direction: column; align-items: center; gap: 14px; padding-block: 56px 28px; }
+.closing .big { font-family: var(--font-display); font-style: italic; font-size: clamp(1.8rem, 6.5vw, 2.4rem); line-height: 1.3; text-wrap: balance; color: var(--petal); max-width: 20ch; }
+.closing .heart { width: 34px; height: 34px; color: var(--rose); filter: drop-shadow(0 0 12px rgba(229, 138, 160, 0.7)); animation: beat 1.6s ease-in-out infinite; }
+@keyframes beat { 0%, 100% { transform: scale(1); } 15% { transform: scale(1.18); } 30% { transform: scale(1); } 45% { transform: scale(1.12); } }
+
+/* Ubah nama */
+details.edit { margin-top: 36px; border: 1px dashed var(--line); border-radius: 8px; padding: 12px 16px; font-size: 0.88rem; color: var(--ink-soft); }
+details.edit summary { cursor: pointer; letter-spacing: 0.1em; }
+details.edit summary:focus-visible { outline: 2px solid var(--gold); outline-offset: 3px; }
+.fields { display: grid; grid-template-columns: repeat(auto-fit, minmax(min(100%, 200px), 1fr)); gap: 12px; margin-top: 14px; }
+.fields label { display: flex; flex-direction: column; gap: 4px; font-size: 0.78rem; letter-spacing: 0.08em; min-width: 0; }
+.fields input {
+  font: inherit; font-size: 1rem; color: var(--ink);
+  background: rgba(255, 255, 255, 0.06);
+  border: 1px solid var(--line); border-radius: 6px; padding: 9px 12px; min-width: 0; width: 100%;
+}
+.fields input:focus-visible { outline: 2px solid var(--gold); outline-offset: 1px; }
+
+.reveal { animation: rise 0.9s ease both; }
+@keyframes rise { from { opacity: 0.001; transform: translateY(14px); } to { opacity: 1; transform: none; } }
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after { animation: none !important; transition: none !important; }
+}
+</style>
+
+<canvas id="sky" aria-hidden="true"></canvas>
+
+<main>
+  <header class="hero reveal">
+    <span class="label">Hari ini milikmu</span>
+    <h1>Selamat Ulang Tahun</h1>
+    <div class="nama" data-nama>Sahabatku</div>
+    <p class="sub">Semoga hari ini selembut cahaya lilin dan sehangat pelukan orang-orang yang menyayangimu.</p>
+    <svg class="ornament" viewBox="0 0 120 14" fill="none" stroke="currentColor" stroke-width="1" aria-hidden="true">
+      <path d="M2 7h46M72 7h46"/>
+      <path d="M60 12.5c-6-4.4-9-7-9-9.6A4.4 4.4 0 0 1 60 1.6a4.4 4.4 0 0 1 9 1.3c0 2.600-3 5.200-9 9.600z" fill="currentColor" stroke="none"/>
+    </svg>
+  </header>
+
+  <section class="cake-wrap" aria-labelledby="t-lilin">
+    <span class="label" id="t-lilin">Satu permintaan</span>
+    <svg id="cake" class="cake" viewBox="0 0 300 260" role="button" tabindex="0" aria-label="Kue ulang tahun. Tekan untuk meniup lilin">
+      <defs>
+        <linearGradient id="g-tier" x1="0" y1="0" x2="0" y2="1">
+          <stop offset="0" stop-color="#f7dfe3"/><stop offset="1" stop-color="#e9a9b8"/>
+        </linearGradient>
+        <linearGradient id="g-base" x1="0" y1="0" x2="0" y2="1">
+          <stop offset="0" stop-color="#e58aa0"/><stop offset="1" stop-color="#c2607c"/>
+        </linearGradient>
+        <radialGradient id="g-flame" cx="50%" cy="70%" r="60%">
+          <stop offset="0" stop-color="#fff6d6"/><stop offset="0.5" stop-color="#f6c970"/><stop offset="1" stop-color="#ee8f4a"/>
+        </radialGradient>
+        <radialGradient id="g-glow" cx="50%" cy="50%" r="50%">
+          <stop offset="0" stop-color="#f6c970" stop-opacity="0.55"/><stop offset="1" stop-color="#f6c970" stop-opacity="0"/>
+        </radialGradient>
+      </defs>
+      <ellipse cx="150" cy="246" rx="128" ry="9" fill="#000" opacity="0.28"/>
+      <rect x="22" y="172" width="256" height="72" rx="10" fill="url(#g-base)"/>
+      <path d="M22 182c18 14 30-4 48 8s30-6 48 6 30-8 48 4 30-10 48 4 30-4 36 2v-24H22z" fill="#fbeaee" opacity="0.92"/>
+      <rect x="58" y="114" width="184" height="62" rx="10" fill="url(#g-tier)"/>
+      <path d="M58 124c15 12 25-3 40 7s25-5 40 5 25-7 40 4 25-8 40 3 18-2 22 0v-20H58z" fill="#fff7f8"/>
+      <g fill="#c2607c">
+        <circle cx="86" cy="152" r="5"/><circle cx="118" cy="158" r="5"/><circle cx="150" cy="152" r="5"/><circle cx="182" cy="158" r="5"/><circle cx="214" cy="152" r="5"/>
+      </g>
+      <g fill="#f0c987">
+        <circle cx="52" cy="214" r="4"/><circle cx="96" cy="222" r="4"/><circle cx="150" cy="216" r="4"/><circle cx="204" cy="222" r="4"/><circle cx="248" cy="214" r="4"/>
+      </g>
+      <!-- lilin -->
+      <g>
+        <rect x="100" y="70" width="10" height="46" rx="3" fill="#f7ece8"/><rect x="100" y="84" width="10" height="5" fill="#e58aa0"/><rect x="100" y="98" width="10" height="5" fill="#e58aa0"/>
+        <rect x="145" y="58" width="10" height="58" rx="3" fill="#f7ece8"/><rect x="145" y="74" width="10" height="5" fill="#f0c987"/><rect x="145" y="90" width="10" height="5" fill="#f0c987"/>
+        <rect x="190" y="70" width="10" height="46" rx="3" fill="#f7ece8"/><rect x="190" y="84" width="10" height="5" fill="#e58aa0"/><rect x="190" y="98" width="10" height="5" fill="#e58aa0"/>
+      </g>
+      <g class="flames">
+        <g class="flame"><circle cx="105" cy="52" r="22" fill="url(#g-glow)"/><path d="M105 38c6 8 8 13 5 18a6 6 0 0 1-10 0c-3-5-1-10 5-18z" fill="url(#g-flame)"/></g>
+        <g class="flame"><circle cx="150" cy="40" r="22" fill="url(#g-glow)"/><path d="M150 26c6 8 8 13 5 18a6 6 0 0 1-10 0c-3-5-1-10 5-18z" fill="url(#g-flame)"/></g>
+        <g class="flame"><circle cx="195" cy="52" r="22" fill="url(#g-glow)"/><path d="M195 38c6 8 8 13 5 18a6 6 0 0 1-10 0c-3-5-1-10 5-18z" fill="url(#g-flame)"/></g>
+      </g>
+      <g class="smoke" stroke="#cdb7bf" stroke-width="2" fill="none" stroke-linecap="round">
+        <path d="M105 56c-4-6 4-10 0-16"/><path d="M150 44c-4-6 4-10 0-16"/><path d="M195 56c-4-6 4-10 0-16"/>
+      </g>
+    </svg>
+    <p class="wish-line" id="wish-line" aria-live="polite">Pejamkan mata, simpan satu harapan, lalu tiup lilinnya.</p>
+    <button class="btn" id="blow" type="button">Tiup lilin</button>
+  </section>
+
+  <section>
+    <article class="letter">
+      <div class="label">Sebuah surat kecil</div>
+      <div class="salam">Untuk <span data-nama>Sahabatku</span>,</div>
+      <p>Ada orang yang datang ke dalam hidup seperti hujan pertama setelah kemarau. Tidak berisik, tetapi membuat semuanya terasa hidup lagi. Kamu salah satunya.</p>
+      <p>Terima kasih sudah menjadi tempat pulang bagi cerita-cerita kecil, tawa yang tidak direncanakan, dan hening yang tetap terasa hangat.</p>
+      <p>Di hari ulang tahunmu, aku tidak meminta banyak. Aku hanya berharap semesta memperlakukanmu sehalus caramu memperlakukan orang-orang di sekitarmu, dan setiap langkahmu tahun ini dipenuhi hal-hal yang kamu cintai.</p>
+      <p>Bertambahnya usia adalah kesempatan untuk bertemu dirimu yang lebih berani, lebih tenang, dan lebih bahagia. Aku ingin ada di dekatmu untuk menyaksikannya.</p>
+      <div class="ttd">dengan sepenuh hati,<br><span data-dari>seseorang yang menyayangimu</span></div>
+    </article>
+  </section>
+
+  <section>
+    <span class="label">Tentang kamu</span>
+    <h2>Alasan dunia lebih indah karena ada kamu</h2>
+    <div class="reasons">
+      <div class="reason">
+        <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 21C5 15.600 2.500 12 2.500 8.600a4.800 4.800 0 0 1 9.500-1 4.800 4.800 0 0 1 9.500 1C21.500 12 19 15.600 12 21z"/></svg>
+        <div><h3>Tawamu</h3><p>Ruangan yang sunyi bisa berubah seperti pagi hari ketika kamu tertawa.</p></div>
+      </div>
+      <div class="reason">
+        <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 21C5 15.600 2.500 12 2.500 8.600a4.800 4.800 0 0 1 9.500-1 4.800 4.800 0 0 1 9.500 1C21.500 12 19 15.600 12 21z"/></svg>
+        <div><h3>Caramu mendengarkan</h3><p>Kamu tidak sekadar mendengar. Kamu membuat orang merasa dimengerti.</p></div>
+      </div>
+      <div class="reason">
+        <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 21C5 15.600 2.500 12 2.500 8.600a4.800 4.800 0 0 1 9.500-1 4.800 4.800 0 0 1 9.500 1C21.500 12 19 15.600 12 21z"/></svg>
+        <div><h3>Ketulusanmu</h3><p>Kebaikanmu tidak butuh penonton, dan justru itu yang membuatnya begitu berharga.</p></div>
+      </div>
+      <div class="reason">
+        <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 21C5 15.600 2.500 12 2.500 8.600a4.800 4.800 0 0 1 9.500-1 4.800 4.800 0 0 1 9.500 1C21.500 12 19 15.600 12 21z"/></svg>
+        <div><h3>Kehadiranmu</h3><p>Di hari yang berat, tahu bahwa kamu ada saja sudah cukup menenangkan.</p></div>
+      </div>
+    </div>
+  </section>
+
+  <section>
+    <span class="label">Doa untukmu</span>
+    <h2>Tiga harapan yang kutitipkan pada langit</h2>
+    <div class="wishes">
+      <div class="wish"><h3>Sehat</h3><p>Tubuh yang kuat, hati yang ringan, dan tidur yang nyenyak setiap malam.</p></div>
+      <div class="wish"><h3>Bahagia</h3><p>Hari-hari yang membuatmu tersenyum tanpa harus dipaksa.</p></div>
+      <div class="wish"><h3>Dicintai</h3><p>Dikelilingi orang-orang yang memilihmu, tahun ini dan seterusnya.</p></div>
+    </div>
+  </section>
+
+  <section class="closing">
+    <svg class="heart" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 21C5 15.600 2.500 12 2.500 8.600a4.800 4.800 0 0 1 9.500-1 4.800 4.800 0 0 1 9.500 1C21.500 12 19 15.600 12 21z"/></svg>
+    <p class="big">Selamat ulang tahun, <span data-nama>Sahabatku</span>. Aku bersyukur kamu ada.</p>
+    <details class="edit">
+      <summary>Ubah nama di halaman ini</summary>
+      <div class="fields">
+        <label for="in-nama">Nama yang berulang tahun<input id="in-nama" type="text" maxlength="30" value="Sahabatku" autocomplete="off"></label>
+        <label for="in-dari">Dari<input id="in-dari" type="text" maxlength="40" value="" placeholder="nama pengirim" autocomplete="off"></label>
+      </div>
+    </details>
+  </section>
+</main>
+
+<script>
+(function () {
+  var reduce = window.matchMedia && window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+  var inNama = document.getElementById("in-nama");
+  var inDari = document.getElementById("in-dari");
+
+  function applyNames() {
+    var n = inNama.value.trim() || "Sahabatku";
+    var d = inDari.value.trim() || "seseorang yang menyayangimu";
+    document.querySelectorAll("[data-nama]").forEach(function (el) { el.textContent = n; });
+    document.querySelectorAll("[data-dari]").forEach(function (el) { el.textContent = d; });
+    try { localStorage.setItem("ultah-nama", inNama.value); localStorage.setItem("ultah-dari", inDari.value); } catch (e) {}
+  }
+  try {
+    var sn = localStorage.getItem("ultah-nama"), sd = localStorage.getItem("ultah-dari");
+    if (sn) inNama.value = sn;
+    if (sd) inDari.value = sd;
+  } catch (e) {}
+  inNama.addEventListener("input", applyNames);
+  inDari.addEventListener("input", applyNames);
+  applyNames();
+
+  /* Langit: hati dan kilau yang melayang pelan */
+  var cv = document.getElementById("sky"), ctx = cv.getContext("2d");
+  var W = 0, H = 0, dpr = Math.min(window.devicePixelRatio || 1, 2);
+  var motes = [], bits = [];
+  function resize() {
+    W = window.innerWidth; H = window.innerHeight;
+    cv.width = W * dpr; cv.height = H * dpr;
+    ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+  }
+  function heartPath(x, y, s) {
+    ctx.beginPath();
+    ctx.moveTo(x, y + s * 0.35);
+    ctx.bezierCurveTo(x - s, y - s * 0.35, x - s * 0.55, y - s * 1.05, x, y - s * 0.5);
+    ctx.bezierCurveTo(x + s * 0.55, y - s * 1.05, x + s, y - s * 0.35, x, y + s * 0.35 + s * 0.65);
+    ctx.closePath();
+  }
+  function spawnMote(initial) {
+    return {
+      x: Math.random() * W, y: initial ? Math.random() * H : H + 20,
+      s: 4 + Math.random() * 9, v: 0.15 + Math.random() * 0.4,
+      sway: Math.random() * Math.PI * 2, sp: 0.004 + Math.random() * 0.008,
+      a: 0.12 + Math.random() * 0.28, heart: Math.random() < 0.45,
+      c: Math.random() < 0.7 ? "229,138,160" : "240,201,135"
+    };
+  }
+  function seed() {
+    motes = [];
+    var n = Math.round(Math.min(34, Math.max(16, W / 28)));
+    for (var i = 0; i < n; i++) motes.push(spawnMote(true));
+  }
+  function confetti() {
+    var cols = ["#f3c9d0", "#e58aa0", "#f0c987", "#f7ece8", "#c2607c"];
+    for (var i = 0; i < 110; i++) {
+      var ang = Math.random() * Math.PI * 2, sp = 3 + Math.random() * 7;
+      bits.push({
+        x: W / 2, y: H * 0.38, vx: Math.cos(ang) * sp, vy: Math.sin(ang) * sp - 4,
+        r: 3 + Math.random() * 4, rot: Math.random() * 6, vr: (Math.random() - 0.5) * 0.3,
+        c: cols[i % cols.length], life: 1, heart: Math.random() < 0.3
+      });
+    }
+  }
+  function frame() {
+    ctx.clearRect(0, 0, W, H);
+    for (var i = 0; i < motes.length; i++) {
+      var m = motes[i];
+      m.y -= m.v; m.sway += m.sp; m.x += Math.sin(m.sway) * 0.35;
+      if (m.y < -30) motes[i] = spawnMote(false);
+      ctx.fillStyle = "rgba(" + m.c + "," + m.a + ")";
+      if (m.heart) { heartPath(m.x, m.y, m.s); ctx.fill(); }
+      else { ctx.beginPath(); ctx.arc(m.x, m.y, m.s * 0.22, 0, 6.2832); ctx.fill(); }
+    }
+    for (var j = bits.length - 1; j >= 0; j--) {
+      var b = bits[j];
+      b.vy += 0.16; b.vx *= 0.99; b.x += b.vx; b.y += b.vy; b.rot += b.vr; b.life -= 0.0045;
+      if (b.life <= 0 || b.y > H + 20) { bits.splice(j, 1); continue; }
+      ctx.save();
+      ctx.globalAlpha = Math.max(b.life, 0);
+      ctx.fillStyle = b.c;
+      ctx.translate(b.x, b.y); ctx.rotate(b.rot);
+      if (b.heart) { heartPath(0, 0, b.r * 1.2); ctx.fill(); }
+      else ctx.fillRect(-b.r, -b.r * 0.5, b.r * 2, b.r);
+      ctx.restore();
+    }
+    requestAnimationFrame(frame);
+  }
+  resize(); seed();
+  window.addEventListener("resize", function () { resize(); seed(); });
+  if (reduce) {
+    ctx.clearRect(0, 0, W, H);
+    motes.forEach(function (m) {
+      ctx.fillStyle = "rgba(" + m.c + "," + m.a + ")";
+      if (m.heart) { heartPath(m.x, m.y, m.s); ctx.fill(); }
+      else { ctx.beginPath(); ctx.arc(m.x, m.y, m.s * 0.22, 0, 6.2832); ctx.fill(); }
+    });
+  } else {
+    requestAnimationFrame(frame);
+  }
+
+  /* Tiup lilin */
+  var cake = document.getElementById("cake");
+  var btn = document.getElementById("blow");
+  var line = document.getElementById("wish-line");
+  var done = false;
+  function blow() {
+    if (done) {
+      cake.classList.remove("out");
+      done = false;
+      btn.textContent = "Tiup lilin";
+      line.textContent = "Pejamkan mata, simpan satu harapan, lalu tiup lilinnya.";
+      return;
+    }
+    done = true;
+    cake.classList.add("out");
+    btn.textContent = "Nyalakan lagi";
+    line.textContent = "Semoga setiap harapan yang kamu simpan menemukan jalannya padamu.";
+    if (!reduce) confetti();
+  }
+  btn.addEventListener("click", blow);
+  cake.addEventListener("click", function () { if (!done) blow(); });
+  cake.addEventListener("keydown", function (e) {
+    if (e.key === "Enter" || e.key === " ") { e.preventDefault(); if (!done) blow(); }
+  });
+})();
+</script>
